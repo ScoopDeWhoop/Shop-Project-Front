@@ -26,7 +26,7 @@ function LoginForm() {
       console.log('Login successful');
       const accessToken = data.token;
       localStorage.setItem('accessToken', accessToken);
-      navigate('/'); 
+      navigate('/Shop-Project-Front'); 
     } else {
       console.error('Login failed:', data.message);
     }

@@ -65,7 +65,7 @@ function App() {
         />
         <Routes>
           <Route
-            path="/"
+            path="/Shop-Project-Front"
             element={
               <>
                 <div className="product_body">
@@ -80,7 +80,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/nutrition"
+            path="Shop-Project-Front/nutrition"
             element={<><div className="product_body">{products
               .filter((product) => product.category === 1)
               .map((product) => (
@@ -90,7 +90,7 @@ function App() {
               ))}</div></>}
           ></Route>
           <Route
-            path="/clothing"
+            path="Shop-Project-Front/clothing"
             element={<><div className="product_body">{products
               .filter((product) => product.category === 2)
               .map((product) => (
@@ -99,9 +99,9 @@ function App() {
                 </div>
               ))}</div></>}
           ></Route>
-          <Route path="login" element={<Login />}></Route>
-          <Route path="/product/:productId" element={<ProductPage />} />
-          <Route path="register" element={<Register />}></Route>
+          <Route path="Shop-Project-Front/login" element={<Login />}></Route>
+          <Route path="Shop-Project-Front/product/:productId" element={<ProductPage />} />
+          <Route path="Shop-Project-Front/register" element={<Register />}></Route>
           
         </Routes>
         <Footer></Footer>
