@@ -78,7 +78,7 @@ function Navbar({ onCategoryClick, searchProduct}) {
         <ul className="navbar">
           <li>
           <Link
-            to="/"
+            to="/Shop-Project-Front"
             className="nav-item"
             aria-current="page"
             onClick={() => onCategoryClick("")}
@@ -88,7 +88,7 @@ function Navbar({ onCategoryClick, searchProduct}) {
           </li>
           <li className="nav-item">
             <Link
-              to="/nutrition"
+              to="Shop-Project-Front/nutrition"
               className="nav-item"
               onClick={() => onCategoryClick("")}
               >
@@ -97,7 +97,7 @@ function Navbar({ onCategoryClick, searchProduct}) {
           </li>
           <li className="nav-item">
             <Link
-              to="/clothing"
+              to="Shop-Project-Front/clothing"
               className="nav-item"
               onClick={() => onCategoryClick("")}
               >
