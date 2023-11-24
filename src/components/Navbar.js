@@ -62,12 +62,12 @@ function Navbar({ onCategoryClick, searchProduct}) {
             ) : (
               <>
                 <div>
-                  <Link className="registerbtn" to="/register">
+                  <Link className="registerbtn" to="Shop-Project-Front/register">
                     Register
                   </Link>
                 </div>
                 <div>
-                  <Link className="loginbtn" to="/login">
+                  <Link className="loginbtn" to="Shop-Project-Front/login">
                     Login
                   </Link>
                 </div>
