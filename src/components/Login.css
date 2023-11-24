@@ -1,0 +1,125 @@
+.login{
+ 
+    padding:50px;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    font-family: 'Lilita One', sans-serif;
+    
+}
+.loginwindow{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    
+    height:400px;
+    width: 30rem;
+    background-image:linear-gradient(#1cba00,#76fa5f,#76fa5f, #d3fdc8);
+    border:1px solid;
+    border-radius:5%;
+}
+
+.loginitem{
+    display:flex;
+    padding:5%;
+    font-size:130%;
+    
+}
+
+.logininput{
+    display:flex;
+    border:1px ;
+    border-radius:3%;
+    margin-left:3%;
+    outline: none;
+}
+.submit{
+    border:1px solid;
+    width:15%;
+    height: 10%;
+    border-radius:15%;
+}
+.submit:hover{
+    color:rgb(0, 151, 23);    
+}
+.register{
+    width: 100%;
+    padding:50px;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    font-family: 'Lilita One', sans-serif;
+}
+.registerwindow{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    padding-bottom: 2%;
+    height:100%;
+    width: 40%;
+    background-image:linear-gradient(#1cba00,#76fa5f,#76fa5f, #d3fdc8);
+    border:1px solid;
+    border-radius:5%;
+}
+.registeritem{
+    display:flex;
+    width:80%;
+    font-size:130%;
+    padding-top:5%;
+    
+}
+.registerinput{
+    width:60%;
+    border:1px ;
+    border-radius:3%;
+    outline: none;
+    margin-left: 1%;
+}
+@media only screen and (max-width: 600px) {
+    .loginwindow {
+      width: 100%;
+      height: 300px;
+    }
+    .loginitem{
+        display: flex;
+        justify-content: center;
+        width: 20%;
+    }
+    .logininput{
+        display:flex;
+        border:1px ;
+        border-radius:3%;
+        margin-left:3%;
+        outline: none;
+        width: 8rem;
+    }
+    .submit{
+        border:1px solid;
+        width:5rem;
+        height: 10%;
+        border-radius:15%;
+    }
+    .registerwindow {
+        width: 100%;
+        height: 550px;
+    }
+    .registeritem{
+        display: flex;
+        justify-content: center;
+        align-items:center;
+        width: 100%;
+        padding-left:2% ;
+        padding-right:2% ;
+    }
+    .registerinput{
+        display:flex;
+        border:1px ;
+        border-radius:3%;
+        margin-left:3%;
+        padding-left: 0;
+        outline: none;
+        width: 8rem;
+      }
+}
