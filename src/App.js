@@ -6,7 +6,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Footer from "./components/Footer";
 import ProductPage from "./components/ProductPage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter as BrowserRouter, Routes, Route } from "react-router-dom";
 import "./components/Products.css";
 import "./App.css";
 
@@ -16,7 +16,6 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   useEffect(getProducts, [selectedCategory]);
   useEffect(getCategories, []);
-
 
   function handleCategoryClick(categoryId) {
     setSelectedCategory(categoryId);
@@ -39,7 +38,7 @@ function App() {
       url += `?search=${search}`;
       setSelectedCategory("searchcontent");
     }
-  
+
     axios
       .get(url)
       .then((response) => {
@@ -52,7 +51,6 @@ function App() {
   }
   function search(search) {
     getProducts(search);
-    
   }
 
   return (
@@ -65,6 +63,7 @@ function App() {
         />
         <Routes>
           <Route
+            exact
             path="/"
             element={
               <>
@@ -81,28 +80,39 @@ function App() {
           ></Route>
           <Route
             path="/nutrition"
-            element={<><div className="product_body">{products
-              .filter((product) => product.category === 1)
-              .map((product) => (
-                <div key={product.id} >
-                  <Product product={product} />
+            element={
+              <>
+                <div className="product_body">
+                  {products
+                    .filter((product) => product.category === 1)
+                    .map((product) => (
+                      <div key={product.id}>
+                        <Product product={product} />
+                      </div>
+                    ))}
                 </div>
-              ))}</div></>}
+              </>
+            }
           ></Route>
           <Route
             path="/clothing"
-            element={<><div className="product_body">{products
-              .filter((product) => product.category === 2)
-              .map((product) => (
-                <div key={product.id} >
-                  <Product product={product} />
+            element={
+              <>
+                <div className="product_body">
+                  {products
+                    .filter((product) => product.category === 2)
+                    .map((product) => (
+                      <div key={product.id}>
+                        <Product product={product} />
+                      </div>
+                    ))}
                 </div>
-              ))}</div></>}
+              </>
+            }
           ></Route>
           <Route path="login" element={<Login />}></Route>
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route path="register" element={<Register />}></Route>
-          
         </Routes>
         <Footer></Footer>
       </BrowserRouter>
