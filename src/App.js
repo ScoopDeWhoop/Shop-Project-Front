@@ -57,7 +57,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Navbar
           categories={categories}
           onCategoryClick={handleCategoryClick}
