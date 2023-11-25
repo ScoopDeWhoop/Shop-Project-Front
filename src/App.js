@@ -6,8 +6,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Footer from "./components/Footer";
 import ProductPage from "./components/ProductPage";
-import {HashRouter as Router, Route } from "react-router-dom";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./components/Products.css";
 import "./App.css";
 
@@ -58,14 +57,14 @@ function App() {
 
   return (
     <>
-      <Router >
+      <BrowserRouter>
         <Navbar
           categories={categories}
           onCategoryClick={handleCategoryClick}
           searchProduct={search}
         />
-        
-          <Route exact
+        <Routes>
+          <Route
             path="/"
             element={
               <>
@@ -104,9 +103,9 @@ function App() {
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route path="register" element={<Register />}></Route>
           
-        
+        </Routes>
         <Footer></Footer>
-      </Router>
+      </BrowserRouter>
     </>
   );
 }

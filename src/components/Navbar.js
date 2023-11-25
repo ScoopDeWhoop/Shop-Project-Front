@@ -1,5 +1,5 @@
 import "./Navbar.css";
-import {HashRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function Navbar({ onCategoryClick, searchProduct}) {
