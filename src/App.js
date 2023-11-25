@@ -6,8 +6,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Footer from "./components/Footer";
 import ProductPage from "./components/ProductPage";
-import {HashRouter as Routes, Route } from "react-router-dom";
-import {BrowserRouter } from "react-router-dom";
+import {HashRouter as Router, Route } from "react-router-dom";
+
 import "./components/Products.css";
 import "./App.css";
 
@@ -58,13 +58,13 @@ function App() {
 
   return (
     <>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <Router basename={process.env.PUBLIC_URL}>
         <Navbar
           categories={categories}
           onCategoryClick={handleCategoryClick}
           searchProduct={search}
         />
-        <Routes>
+        
           <Route exact
             path="/"
             element={
@@ -104,9 +104,9 @@ function App() {
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route path="register" element={<Register />}></Route>
           
-        </Routes>
+        
         <Footer></Footer>
-      </BrowserRouter>
+      </Router>
     </>
   );
 }
