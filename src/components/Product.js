@@ -1,6 +1,6 @@
 import React from 'react';
 import "./Products.css";
-import { Link } from "react-router-dom";
+import {HashRouter as Link } from "react-router-dom";
 
 function Products({ product }) {
   const hostname = 'https://danielshop.onrender.com/static';
