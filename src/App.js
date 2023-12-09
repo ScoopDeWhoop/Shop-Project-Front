@@ -16,26 +16,51 @@ function App() {
   const [loginChange, setLoginChange] = useState(false);
   const [userCart, setUserCart] = useState(false);
   useEffect(getProducts, []);
+  const [cart, setCart] = useState({});
+  
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    if (accessToken) axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
     setLoginChange(loginChange => !loginChange);
   }, []);
-
+  useEffect(() => {
+      const getCartProducts = () => {
+        axios
+          .get("http://127.0.0.1:8000/user-cart/")
+          .then((response) => setCart(response.data.products))
+          .catch((error) => console.error("Error fetching user cart:", error));
+      };
+      getCartProducts();
+      
+      return () => {};
+    }, []);
   function getProducts(search = null) {
     let url = "http://127.0.0.1:8000/product";
     if (search) {
       url += `?search=${search}`;
     }
+  
     axios
       .get(url)
       .then((response) => {
+        // Handle successful response
         setProducts(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        // Handle error
+        if (error.response) {
+          // The request was made, and the server responded with a status code
+          console.error('Response error:', error.response.status, error.response.data);
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.error('Request error:', error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.error('Error:', error.message);
+        }
       });
   }
+  
   function handleCart(cart) {
     setUserCart(cart);
   }
@@ -43,7 +68,7 @@ function App() {
   return (
     <>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <Navbar getProducts={getProducts} loginChange={loginChange} />
+        <Navbar getProducts={getProducts} loginChange={loginChange} cart={cart} />
         <Routes>
           <Route
             path="/"
