@@ -9,9 +9,8 @@ function ProductPage() {
     const [product, setProduct] = useState(null);
   
     useEffect(() => {
-      // Fetch the product details using the productId
       if (productId) {
-        axios.get(`https://danielshop.onrender.com/product/${productId}`)
+        axios.get(`http://127.0.0.1:8000/product/${productId}`)
           .then((response) => {
             setProduct(response.data);
           })

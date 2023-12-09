@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function LoginForm() {
+
+function LoginForm({loginChange,setLoginChange}) {
   axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
   axios.defaults.xsrfCookieName = "csrftoken";
   const [username, setUsername] = useState("");
@@ -12,29 +13,22 @@ function LoginForm() {
   const navigate = useNavigate();
   const handleLogin = async () => {
   try {
-    const response = await fetch('https://danielshop.onrender.com/login/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      console.log('Login successful');
-      const accessToken = data.token;
-      localStorage.setItem('accessToken', accessToken);
-      navigate('/'); 
-    } else {
-      console.error('Login failed:', data.message);
+    const response = await axios.post(
+      'http://127.0.0.1:8000/login/',
+      { username, password }
+    );
+    console.log(response)
+    const accessToken = response.data.access_token;
+    console.log('Login successful');
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem("username",username)
+    navigate('/'); 
+    setLoginChange(!loginChange)
+    } catch (error) {
+      console.error('Login failed', error.response.data);
     }
-  } catch (error) {
-    console.error('Error during login:', error);
-  }
-};
-
+  };
   
 
 
