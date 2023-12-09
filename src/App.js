@@ -6,63 +6,44 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Footer from "./components/Footer";
 import ProductPage from "./components/ProductPage";
+import Cart from "./components/Cart";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./components/Products.css";
 import "./App.css";
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  useEffect(getProducts, [selectedCategory]);
-  useEffect(getCategories, []);
-
-
-  function handleCategoryClick(categoryId) {
-    setSelectedCategory(categoryId);
-  }
-  function getCategories() {
-    axios
-      .get("https://danielshop.onrender.com/category")
-      .then((response) => {
-        console.log("categories", response.data);
-        setCategories(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }
+  const [loginChange, setLoginChange] = useState(false);
+  const [userCart, setUserCart] = useState(false);
+  useEffect(getProducts, []);
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    setLoginChange(loginChange => !loginChange);
+  }, []);
 
   function getProducts(search = null) {
-    let url = "https://danielshop.onrender.com/product";
+    let url = "http://127.0.0.1:8000/product";
     if (search) {
       url += `?search=${search}`;
-      setSelectedCategory("searchcontent");
     }
-  
     axios
       .get(url)
       .then((response) => {
-        console.log(response.data);
         setProducts(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }
-  function search(search) {
-    getProducts(search);
-    
+  function handleCart(cart) {
+    setUserCart(cart);
   }
 
   return (
     <>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <Navbar
-          categories={categories}
-          onCategoryClick={handleCategoryClick}
-          searchProduct={search}
-        />
+        <Navbar getProducts={getProducts} loginChange={loginChange} />
         <Routes>
           <Route
             path="/"
@@ -71,7 +52,7 @@ function App() {
                 <div className="product_body">
                   {products.map((product) => (
                     <div key={product.id}>
-                      <Product product={product} />
+                      <Product userCart={userCart} product={product} />
                     </div>
                   ))}
                 </div>
@@ -81,28 +62,48 @@ function App() {
           ></Route>
           <Route
             path="/nutrition"
-            element={<><div className="product_body">{products
-              .filter((product) => product.category === 1)
-              .map((product) => (
-                <div key={product.id} >
-                  <Product product={product} />
+            element={
+              <>
+                <div className="product_body">
+                  {products
+                    .filter((product) => product.category === 1)
+                    .map((product) => (
+                      <div key={product.id}>
+                        <Product userCart={userCart} product={product} />
+                      </div>
+                    ))}
                 </div>
-              ))}</div></>}
+              </>
+            }
           ></Route>
           <Route
             path="/clothing"
-            element={<><div className="product_body">{products
-              .filter((product) => product.category === 2)
-              .map((product) => (
-                <div key={product.id} >
-                  <Product product={product} />
+            element={
+              <>
+                <div className="product_body">
+                  {products
+                    .filter((product) => product.category === 2)
+                    .map((product) => (
+                      <div key={product.id}>
+                        <Product userCart={userCart} product={product} />
+                      </div>
+                    ))}
                 </div>
-              ))}</div></>}
+              </>
+            }
           ></Route>
-          <Route path="login" element={<Login />}></Route>
+          <Route
+            path="login"
+            element={
+              <Login
+                loginChange={loginChange}
+                setLoginChange={setLoginChange}
+              />
+            }
+          ></Route>
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route path="register" element={<Register />}></Route>
-          
+          <Route path="cart" element={<Cart handleCart={handleCart} />}></Route>
         </Routes>
         <Footer></Footer>
       </BrowserRouter>
