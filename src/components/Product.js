@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./Products.css";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 function Products({ product }) {
   const [cart, setCart] = useState({});
-  const [cartItems, setCartItems] = useState({});
-  
+  const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     const getCart = () => {
       axios
@@ -18,28 +19,32 @@ function Products({ product }) {
     getCart();
     return () => {};
   }, []);
+  useEffect(()=>{
+    const getItems=()=>{
+      const itemsUrl="http://127.0.0.1:8000/cart/cart-items/"
+      axios
+      .get(itemsUrl)
+      .then((response) => {
+        
+        setCartItems(response.data);
+      })
+    };
+    getItems();
+    return ()=> {};
+  }, [])
+  
   const hostname = "http://127.0.0.1:8000/static";
   const imageUrl = `${hostname}${product.image}`;
   
   const handleAdd = async (cartId, productId) => {
     if (cart.products.includes(productId)){
-      const url="http://127.0.0.1:8000/cart/cart-items/"
-      await axios
-      .get(url)
-      .then((response) => {
-        
-        setCartItems(response.data);
-      })
+      
 
       const cartItem = cartItems.filter(item => item.product === productId && item.cart === cartId);
-      
-        if (cartItem) {
-          const updatedQuantity = cartItem[0].quantity + 1;
-
-          
+      if (cartItem.length > 0){
           const url = `http://127.0.0.1:8000/cart/cart-items/${cartItem[0].id}/`;
           const data = {
-            quantity: updatedQuantity,
+            quantity: cartItem[0].quantity + 1,
           };
 
           const response = await fetch(url, {
@@ -53,7 +58,6 @@ function Products({ product }) {
 
           if (response.ok) {
             // Quantity updated successfully
-            console.log("updated")
           } else {
             // Handle error
             console.error("Failed to update quantity");
@@ -90,6 +94,10 @@ function Products({ product }) {
     }}
     
   };
+  const buyNow=async(cartId, productId) => {
+      await handleAdd(cartId,productId)
+      navigate("/cart")
+    }
   return (
     <div className="product_frame">
       <Link
@@ -108,9 +116,9 @@ function Products({ product }) {
         >
           Add to cart
         </button>
-        <Link key={product.id} to="cart" className="buybtn">
+        <button onClick={() => buyNow(cart.id,product.id)} className="buybtn">
           Buy now
-        </Link>
+        </button>
       </div>
     </div>
   );
