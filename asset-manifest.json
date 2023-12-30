@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/Shop-Project-Front/static/css/main.615553ad.css",
-    "main.js": "/Shop-Project-Front/static/js/main.42a7f2d0.js",
+    "main.css": "/Shop-Project-Front/static/css/main.86253630.css",
+    "main.js": "/Shop-Project-Front/static/js/main.1756fabd.js",
     "static/js/787.37c29796.chunk.js": "/Shop-Project-Front/static/js/787.37c29796.chunk.js",
+    "static/media/1.png": "/Shop-Project-Front/static/media/1.92bf8a11f5193d090317.png",
     "index.html": "/Shop-Project-Front/index.html",
-    "main.615553ad.css.map": "/Shop-Project-Front/static/css/main.615553ad.css.map",
-    "main.42a7f2d0.js.map": "/Shop-Project-Front/static/js/main.42a7f2d0.js.map",
+    "main.86253630.css.map": "/Shop-Project-Front/static/css/main.86253630.css.map",
+    "main.1756fabd.js.map": "/Shop-Project-Front/static/js/main.1756fabd.js.map",
     "787.37c29796.chunk.js.map": "/Shop-Project-Front/static/js/787.37c29796.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.615553ad.css",
-    "static/js/main.42a7f2d0.js"
+    "static/css/main.86253630.css",
+    "static/js/main.1756fabd.js"
   ]
 }
