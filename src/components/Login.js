@@ -14,12 +14,10 @@ function LoginForm({loginChange,setLoginChange}) {
   const handleLogin = async () => {
   try {
     const response = await axios.post(
-      'http://127.0.0.1:8000/login/',
+      'https://danielshop.onrender.com/login/',
       { username, password }
     );
-    console.log(response)
     const accessToken = response.data.access_token;
-    console.log('Login successful');
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem("username",username)

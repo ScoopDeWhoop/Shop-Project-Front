@@ -9,11 +9,12 @@ function Products({ product }) {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    const getCart = () => {
-      axios
-        .get("http://127.0.0.1:8000/user-cart/")
+    const getCart = () => {const accessToken = localStorage.getItem("accessToken");
+    if (accessToken)
+      {axios
+        .get("https://danielshop.onrender.com/user-cart/")
         .then((response) => setCart(response.data))
-        .catch((error) => console.error("Error fetching user cart:", error));
+        .catch((error) => console.error("Error fetching user cart:", error));}
         
     };
     getCart();
@@ -21,7 +22,7 @@ function Products({ product }) {
   }, []);
   useEffect(()=>{
     const getItems=()=>{
-      const itemsUrl="http://127.0.0.1:8000/cart/cart-items/"
+      const itemsUrl="https://danielshop.onrender.com/cart/cart-items/"
       axios
       .get(itemsUrl)
       .then((response) => {
@@ -33,7 +34,7 @@ function Products({ product }) {
     return ()=> {};
   }, [])
   
-  const hostname = "http://127.0.0.1:8000/static";
+  const hostname = "https://danielshop.onrender.com/static";
   const imageUrl = `${hostname}${product.image}`;
   
   const handleAdd = async (cartId, productId) => {
@@ -42,7 +43,7 @@ function Products({ product }) {
 
       const cartItem = cartItems.filter(item => item.product === productId && item.cart === cartId);
       if (cartItem.length > 0){
-          const url = `http://127.0.0.1:8000/cart/cart-items/${cartItem[0].id}/`;
+          const url = `https://danielshop.onrender.com/cart/cart-items/${cartItem[0].id}/`;
           const data = {
             quantity: cartItem[0].quantity + 1,
           };
@@ -68,13 +69,12 @@ function Products({ product }) {
         }
     }
     else{
-    const url = "http://127.0.0.1:8000/cart/cart-items/ ";
+    const url = "https://danielshop.onrender.com/cart/cart-items/ ";
     const data = {
       quantity: 1,
       cart: cartId,
       product: productId,
     };
-    console.log('Request Payload:', data);
     const response = await fetch(url, {
       method: "POST",
       headers: {

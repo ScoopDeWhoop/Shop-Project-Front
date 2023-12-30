@@ -10,7 +10,7 @@ function ProductPage() {
   
     useEffect(() => {
       if (productId) {
-        axios.get(`http://127.0.0.1:8000/product/${productId}`)
+        axios.get(`https://danielshop.onrender.com/product/${productId}`)
           .then((response) => {
             setProduct(response.data);
           })

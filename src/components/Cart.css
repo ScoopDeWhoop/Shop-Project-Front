@@ -4,3 +4,19 @@
     width: 200px;
     background:white;
 }
+.emptyCart{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top:5%;
+    padding-bottom: 25%;
+}
+.clear-btn{
+    display: flex;
+}
+.total-items{
+    display:flex;
+    align-items:center;
+    font-size: 30px;
+}
