@@ -23,7 +23,7 @@ function Navbar({getProducts,loginChange,sum, updateSum}) {
       
       setUser(userDetails);
     }
-  }, [loginChange]);
+  }, [loginChange ]);
   function search(search) {
     getProducts(search);
     navigate("/")

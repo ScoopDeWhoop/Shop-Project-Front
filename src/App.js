@@ -60,7 +60,7 @@ function App() {
     getCartQuantity();
 
     return () => {};
-  }, [cartId, cart]);
+  }, [cartId]);
 
   useEffect(() => {
     const getSum = async () => {
@@ -130,6 +130,7 @@ function App() {
                         userCart={userCart}
                         product={product}
                         cart={cart}
+                        updateSum={updateSum}
                       />
                     </div>
                   ))}
@@ -147,7 +148,7 @@ function App() {
                     .filter((product) => product.category === 1)
                     .map((product) => (
                       <div key={product.id}>
-                        <Product userCart={userCart} product={product} />
+                        <Product userCart={userCart} product={product} updateSum={updateSum} />
                       </div>
                     ))}
                 </div>
@@ -163,7 +164,7 @@ function App() {
                     .filter((product) => product.category === 2)
                     .map((product) => (
                       <div key={product.id}>
-                        <Product userCart={userCart} product={product} />
+                        <Product userCart={userCart} product={product} updateSum={updateSum} />
                       </div>
                     ))}
                 </div>
@@ -177,6 +178,7 @@ function App() {
                 loginChange={loginChange}
                 setLoginChange={setLoginChange}
                 updateSum={updateSum} 
+                
               />
             }
           ></Route>

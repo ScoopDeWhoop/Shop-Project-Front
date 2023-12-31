@@ -4,7 +4,7 @@ import { Link,useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-function Products({ product }) {
+function Products({ product ,updateSum}) {
   const [cart, setCart] = useState({});
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
