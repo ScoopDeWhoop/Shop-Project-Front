@@ -60,7 +60,7 @@ function App() {
     getCartQuantity();
 
     return () => {};
-  }, [cartId]);
+  }, [cartId,cart]);
 
   useEffect(() => {
     const getSum= async ()=>{
