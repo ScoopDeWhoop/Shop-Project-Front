@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import "./Cart.css";
 
-function Cart({sum}) {
+function Cart({sum,updateSum}) {
   const [cart, setCart] = useState({});
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -10,7 +10,14 @@ function Cart({sum}) {
   const [quantityMap, setQuantityMap] = useState({});
   const accessToken = localStorage.getItem("accessToken");
   useEffect(getCart, [accessToken]);
+  useEffect(() => {
+    // Filter cartItems based on the current user's cart ID
+    const userCartItems = cartItems.filter((item) => item.cart === cart.id);
   
+    // Calculate the sum from userCartItems and updateSum
+    const newSum = userCartItems.reduce((sum, obj) => sum + obj.quantity, 0);
+    updateSum(newSum);
+  }, [cartItems, cart.id, updateSum]);
   useEffect(() => {
     const username = localStorage.getItem("username");
     if (username) 
@@ -53,15 +60,16 @@ function Cart({sum}) {
   };
 
   const handleAddQuantity = async (cartId, productId) => {
-  
-    const cartItem = cartItems.find((item) => item.product === productId && item.cart === cartId);
-  
+    const cartItem = cartItems.find(
+      (item) => item.product === productId && item.cart === cartId
+    );
+
     if (cartItem) {
       const url = `https://danielshop.onrender.com/cart/cart-items/${cartItem.id}/`;
       const data = {
         quantity: cartItem.quantity + 1,
       };
-  
+
       try {
         const response = await fetch(url, {
           method: "PATCH",
@@ -70,17 +78,25 @@ function Cart({sum}) {
           },
           body: JSON.stringify(data),
         });
-  
+
         if (response.ok) {
-          // Update the state based on the previous state
           const updatedCartItems = cartItems.map((item) =>
-            item.id === cartItem.id ? { ...item, quantity: item.quantity + 1 } : item
+            item.id === cartItem.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
           );
-  
+
           setCartItems(updatedCartItems);
-  
-          // Update the quantity map based on the response data
           updateQuantityMap(updatedCartItems);
+
+          // Calculate new sum
+          const newSum = updatedCartItems.reduce(
+            (sum, obj) => sum + obj.quantity,
+            0
+          );
+
+          // Update the sum using the callback
+          updateSum(newSum);
         } else {
           console.error("Failed to update quantity");
         }
@@ -91,36 +107,48 @@ function Cart({sum}) {
       console.error("Product not found in the cart");
     }
   };
-  
 
   const handleDecreaseQuantity = async (cartId, productId) => {
-    const cartItem = cartItems.find((item) => item.product === productId && item.cart === cartId);
-  
+    const cartItem = cartItems.find(
+      (item) => item.product === productId && item.cart === cartId
+    );
+
     if (cartItem) {
       const newQuantity = cartItem.quantity - 1;
-  
+
       if (newQuantity > 0) {
-        // Update quantity as usual
         const url = `https://danielshop.onrender.com/cart/cart-items/${cartItem.id}/`;
         const data = {
           quantity: newQuantity,
         };
-  
+
         try {
           const response = await axios.patch(url, data);
-  
+
           if (response.status === 200) {
-            // Update the state based on the previous state
             updateQuantityMap(
               cartItems.map((item) =>
-                item.id === cartItem.id ? { ...item, quantity: newQuantity } : item
+                item.id === cartItem.id
+                  ? { ...item, quantity: newQuantity }
+                  : item
               )
             );
             setCartItems((prevCartItems) =>
               prevCartItems.map((item) =>
-                item.id === cartItem.id ? { ...item, quantity: newQuantity } : item
+                item.id === cartItem.id
+                  ? { ...item, quantity: newQuantity }
+                  : item
               )
             );
+
+            // Calculate new sum
+            const newSum = cartItems.reduce(
+              (sum, obj) => sum + obj.quantity,
+              0
+            );
+
+            // Update the sum using the callback
+            updateSum(newSum);
           } else {
             console.error("Failed to update quantity");
           }
@@ -130,23 +158,28 @@ function Cart({sum}) {
       } else {
         // Quantity is 0, so delete the cart item
         const deleteUrl = `https://danielshop.onrender.com/cart/cart-items/${cartItem.id}/`;
-  
+
         try {
           const response = await axios.delete(deleteUrl);
-  
+
           if (response.status === 204) {
-            // Remove the item from the state
             setCartItems((prevCartItems) =>
               prevCartItems.filter((item) => item.id !== cartItem.id)
             );
-            // Remove the product from the state
             setProducts((prevProducts) =>
               prevProducts.filter((product) => product.id !== productId)
             );
-            // Optionally, you can update the quantity map here as well
             updateQuantityMap(
               cartItems.filter((item) => item.id !== cartItem.id)
             );
+
+            // Calculate new sum
+            const newSum = cartItems
+              .filter((item) => item.id !== cartItem.id)
+              .reduce((sum, obj) => sum + obj.quantity, 0);
+
+            // Update the sum using the callback
+            updateSum(newSum);
           } else {
             console.error("Failed to delete cart item");
           }
@@ -158,7 +191,7 @@ function Cart({sum}) {
       console.error("Product not found in the cart");
     }
   };
-  
+
   
   
 

@@ -184,7 +184,7 @@ function App() {
           <Route path="register" element={<Register />}></Route>
           <Route
             path="cart"
-            element={<Cart handleCart={handleCart} sum={sum} />}
+            element={<Cart handleCart={handleCart} sum={sum} updateSum={updateSum} />}
           ></Route>
         </Routes>
         <Footer></Footer>
