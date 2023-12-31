@@ -60,15 +60,19 @@ function App() {
     getCartQuantity();
 
     return () => {};
-  }, [cartId]);
+  }, [cartId, cart]);
 
   useEffect(() => {
-    const getSum= async ()=>{
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken && await Array.isArray(cart)) {
-      const sumOfQuantities = cart.reduce((sum, obj) => sum + obj.quantity, 0);
-      setSum(sumOfQuantities);
-    }};
+    const getSum = async () => {
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken && (await Array.isArray(cart))) {
+        const sumOfQuantities = cart.reduce(
+          (sum, obj) => sum + obj.quantity,
+          0
+        );
+        setSum(sumOfQuantities);
+      }
+    };
     getSum();
     return () => {};
   }, [cart]);
@@ -175,7 +179,10 @@ function App() {
           ></Route>
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route path="register" element={<Register />}></Route>
-          <Route  path="cart" element={<Cart handleCart={handleCart} sum={sum}/>}></Route>
+          <Route
+            path="cart"
+            element={<Cart handleCart={handleCart} sum={sum} />}
+          ></Route>
         </Routes>
         <Footer></Footer>
       </BrowserRouter>
