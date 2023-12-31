@@ -107,11 +107,13 @@ function App() {
   function handleCart(cart) {
     setUserCart(cart);
   }
-
+  const updateSum = (newSum) => {
+    setSum(newSum);
+  };
   return (
     <>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <Navbar getProducts={getProducts} loginChange={loginChange} sum={sum} />
+        <Navbar getProducts={getProducts} loginChange={loginChange} sum={sum} updateSum={updateSum} />
         <Routes>
           <Route
             path="/"
@@ -170,6 +172,7 @@ function App() {
               <Login
                 loginChange={loginChange}
                 setLoginChange={setLoginChange}
+                updateSum={updateSum} 
               />
             }
           ></Route>

@@ -3,7 +3,7 @@ import myImage from './1.png';
 import { Link,useNavigate} from "react-router-dom";
 import { useState, useEffect } from "react";
 
-function Navbar({getProducts,loginChange,sum}) {
+function Navbar({getProducts,loginChange,sum, updateSum}) {
   const [searchText, setSearchText] = useState("");
   const [user, setUser] = useState(null);
   
@@ -14,6 +14,7 @@ function Navbar({getProducts,loginChange,sum}) {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("username");
     setUser(null);
+    updateSum(0); 
   };
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
